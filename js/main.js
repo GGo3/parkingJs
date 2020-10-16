@@ -41,16 +41,16 @@ const countingOccupiedParking = () => {
 countingOccupiedParking();
 
 // *************** 3) Функция для отображения на странице паркоместа с указанием id, свободно/занято, время занятого. ***************
-// const mainEl = document.querySelector('.main');
-// let str = '';
+const mainEl = document.querySelector('.main');
+let str = '';
 
-// const genereteParkingOnPage = (park) => {
-//   for (let i = 0; i < park.length; i++) {
-//     str = `${str}<div class="space">ID: ${park[i].id}<br>occupied: ${park[i].occupied}<br>time: ${park[i].time}<br></div>`
-//   }
-//   mainEl.innerHTML = str;
-// }
-// genereteParkingOnPage(parking);
+const genereteParkingOnPage = (park) => {
+  for (let i = 0; i < park.length; i++) {
+    str = `${str}<div class="space">ID: ${park[i].id}<br>occupied: ${park[i].occupied}<br>time: ${park[i].time}<br></div>`
+  }
+  mainEl.innerHTML = str;
+}
+genereteParkingOnPage(parking);
 
 // *************** 4) Подключение библиотеки moment.js через npm и отображение на странице время из переменной currentTime. ***************
 
@@ -61,20 +61,29 @@ console.log(currentTime);
 
 // *************** 5) При нажатии на паркоместо, если оно пустое, появляется модальное окно с полем input, в котором нужно ввести время занимания парковки. При нажатии "ОК" парковка занимается. ***************
 const modalEmptyEl = document.getElementById('myModal');
-const spaceEl = document.querySelector('.space');
-const closeModal = document.querySelector('.close')
+const spaceEl = document.querySelectorAll('.space');
+const closeModal = document.querySelector('.close');
+const modalBtnOk = document.querySelector('.modal-ok');
+const timeInputEl = document.querySelector('.time-inp');
+let timeSpace = 0;
 
-spaceEl.onclick = function() {
-  modalEmptyEl.style.display = "block";
-}
-closeModal.onclick = function() {
+closeModal.onclick = () => {
   modalEmptyEl.style.display = "none";
-}
-// window.onclick = function(event) {
-//   if (event.target == modal) {
-//     modal.style.display = "none";
-//   }
-// }
+};
 
+const openModalEmpty = () => {
+  modalEmptyEl.style.display = "block";
+};
+
+for (i = 0; i < spaceEl.length; i++) {
+  spaceEl[i].addEventListener('click', openModalEmpty);
+};
+
+const getTimeSpace = () => {
+  timeSpace = timeInputEl.valueAsNumber;
+  modalEmptyEl.style.display = "none";
+  console.log(timeSpace);
+}
+modalBtnOk.addEventListener('click', getTimeSpace);
 
 
